@@ -1,0 +1,61 @@
+apt-get update && apt-get install -y git wget autoconf libtool libjson-c-dev tar build-essential libxml2 libxml-libxml-perl dialog libglib2.0-dev libc-ares-dev bison flex libtinfo-dev textinfo telnet nano
+
+cd /tmp
+wget http://hpnouri@hpnouri.free.fr/misc/readline-7.0.tar.gz
+tar -zxvf readline-7.0.tar.gz
+cd readline-7.0
+./configure
+make
+------------- ????
+cd /tmp
+wget https://pkg-config.freedesktop.org/releases/pkg-config-0.29.tar.gz
+tar -zxvf pkg-config-0.29.tar.gz
+cd pkg-config-0.29
+------------
+
+
+
+
+git clone https://github.com/FRRouting/frr
+cd frr
+./bootstrap.sh
+./configure
+make
+
+
+############################
+FRRouting configuration
+------------------------------
+FRR version             : 3.1-dev
+host operating system   : linux-gnu
+source code location    : .
+compiler                : gcc -std=gnu11
+compiler flags          :  -g -Os -fno-omit-frame-pointer -Wall -Wextra -Wmissing-prototypes -Wmissing-declarations -Wpointer-arith -Wbad-function-cast -Wwrite-strings -Wno-unused-result -Wno-unused-parameter -Wno-missing-field-initializers -pthread
+make                    : make
+linker flags            :  -rdynamic -ldl -lcrypt   -ljson-c -lrt  -lreadline  -lm
+state file directory    : /var/run
+config file directory   : /usr/local/etc
+example directory       : /usr/local/etc
+module directory        : /usr/local/lib/frr/modules
+user to run as          : frr
+group to run as         : frr
+group for vty sockets   : 
+config file mask        : 0600
+log file mask           : 0600
+zebra protobuf enabled  : no
+
+The above user and group must have read/write access to the state file
+directory and to the config files in the config file directory.
+###########################
+
+
+
+RUN useradd -ms /bin/bash frr
+USER frr
+WORKDIR /home/frr
+
+
+chown -R frr:frr /usr/local/etc
+chown -R frr:frr /var/run
+
+
